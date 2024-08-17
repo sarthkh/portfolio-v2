@@ -24,7 +24,7 @@ export default function ProjectCard({
           <span className="underline underline-offset-4 group-hover:text-neutral-500 transition-colors duration-200">
             {title}{" "}
           </span>
-          <RxArrowTopRight className="group-hover:text-neutral-500 group-hover:-translate-y-1 transition duration-200" />
+          <RxArrowTopRight className="group-hover:text-neutral-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition duration-200" />
         </Link>
         <p className="text-neutral-500">{description}</p>
       </div>
