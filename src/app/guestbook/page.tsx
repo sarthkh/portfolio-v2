@@ -1,3 +1,5 @@
+import GuestbookForm from "../components/guestbook-form";
+
 export default function Guestbook() {
-  return <div>guestbook</div>;
+  return <GuestbookForm />;
 }

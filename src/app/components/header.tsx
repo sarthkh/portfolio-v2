@@ -18,14 +18,19 @@ export default function Header() {
           &larr; Back
         </Link>
       ) : (
-        <Link href="/" className="font-migra text-lg">
-          sarthak
+        <Link href="/" className="hover:underline underline-offset-4">
+          sarthkh
         </Link>
       )}
       <ul className="flex gap-8">
         {items.map((item) => (
           <li key={item.href} className="">
-            <Link href={item.href}>{item.label}</Link>
+            <Link
+              href={item.href}
+              className="hover:underline underline-offset-4"
+            >
+              {item.label}
+            </Link>
           </li>
         ))}
       </ul>

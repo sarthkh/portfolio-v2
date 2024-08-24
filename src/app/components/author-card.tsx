@@ -14,11 +14,11 @@ export default function AuthorCard() {
       <div className="text-sm flex flex-col text-neutral-500">
         <p className="">Sarthak Khandelwal</p>
         <Link
-          href="https://twitter.com/sarthakz25"
+          href="https://twitter.com/sarthkh"
           target="_blank"
           className="tracking-wide font-mono underline underline-offset-2 hover:text-neutral-200 transition-colors duration-200"
         >
-          @sarthakz25
+          @sarthkh
         </Link>
       </div>
     </div>

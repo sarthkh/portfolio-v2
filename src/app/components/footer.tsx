@@ -6,7 +6,7 @@ import {
   FiTriangle,
   FiLinkedin,
 } from "react-icons/fi";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaXTwitter, FaEnvelope } from "react-icons/fa6";
 import { Reveal } from "../utils/reveal";
 
 export default function Footer() {
@@ -21,7 +21,7 @@ export default function Footer() {
               <p>
                 Built by&nbsp;
                 <Link
-                  href="https://github.com/sarthakz25"
+                  href="https://github.com/sarthkh"
                   className="underline underline-offset-4 hover:text-neutral-200 transition-colors duration-200"
                 >
                   Sarthak Khandelwal
@@ -70,9 +70,15 @@ export default function Footer() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-lg sm:text-sm">
             <Link
-              href="https://github.com/sarthakz25"
+              href="mailto:sarthakhandelwal@gmail.com"
+              className="border border-neutral-500 p-1 rounded-sm hover:text-neutral-200 hover:border-neutral-200 transition-colors duration-200"
+            >
+              <FaEnvelope />
+            </Link>
+            <Link
+              href="https://github.com/sarthkh"
               className="border border-neutral-500 p-1 rounded-sm hover:text-neutral-200 hover:border-neutral-200 transition-colors duration-200"
             >
               <FiGithub />
@@ -84,7 +90,7 @@ export default function Footer() {
               <FiLinkedin />
             </Link>
             <Link
-              href="https://twitter.com/sarthakz25"
+              href="https://twitter.com/sarthkh"
               className="border border-neutral-500 p-1 rounded-sm hover:text-neutral-200 hover:border-neutral-200 transition-colors duration-200"
             >
               <FaXTwitter />

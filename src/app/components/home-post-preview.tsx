@@ -11,11 +11,11 @@ const HomePostPreview = (props: PostMetadata) => {
         href={`/blog/posts/${props.slug}`}
       >
         <div className="">
-          <p className="font-light tracking-wider underline underline-offset-2 text-xs sm:text-sm">
+          <p className="font-light tracking-wider underline underline-offset-4 text-sm">
             {props.title}
           </p>
         </div>
-        <span className="text-xs tracking-wider font-light mt-1 text-right">
+        <span className="text-xs tracking-wider font-light text-right text-neutral-500">
           {props.date}
         </span>
       </Link>

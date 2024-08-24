@@ -2,6 +2,7 @@ import Link from "next/link";
 import getPostMetadata from "../utils/post-metadata";
 import HomePostPreview from "./home-post-preview";
 import { Reveal } from "../utils/reveal";
+import { RxArrowRight } from "react-icons/rx";
 
 export default function BlogPreview() {
   const postMetadata = getPostMetadata().sort(
@@ -24,9 +25,14 @@ export default function BlogPreview() {
 
       <Link
         href="/blog"
-        className="text-sm text-neutral-500 underline underline-offset-4 hover:text-neutral-200 transition-colors duration-200"
+        className="flex items-center gap-1 text-sm text-neutral-500 group"
       >
-        All posts &rarr;
+        <span className="underline underline-offset-4 group-hover:text-neutral-200 transition-colors duration-200">
+          All posts
+        </span>
+        <span className="group-hover:text-neutral-200 group-hover:translate-x-1.5 transition duration-200">
+          <RxArrowRight />
+        </span>
       </Link>
     </div>
   );

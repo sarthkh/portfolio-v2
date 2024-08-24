@@ -10,7 +10,7 @@ const BlogPostPreview = (props: PostMetadata) => {
         className="flex flex-col w-full items-start my-4"
         href={`/blog/posts/${props.slug}`}
       >
-        <p className="font-light tracking-wider underline underline-offset-2">
+        <p className="font-light tracking-wider underline underline-offset-4">
           {props.title}
         </p>
         <p className="font-light text-sm text-neutral-500 py-1">
