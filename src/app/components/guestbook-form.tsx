@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Reveal } from "../utils/reveal";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { SignInButton, SignOutButton, useUser } from "@clerk/clerk-react";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import { RxArrowRight } from "react-icons/rx";
 
 const GuestbookForm = () => {

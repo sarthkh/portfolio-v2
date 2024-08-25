@@ -1,7 +1,7 @@
 export default {
   providers: [
     {
-      domain: "https://adjusted-ladybird-87.clerk.accounts.dev",
+      domain: "https://delicate-tuna-88.clerk.accounts.dev",
       applicationID: "convex",
     },
   ],
