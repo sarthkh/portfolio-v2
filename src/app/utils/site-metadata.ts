@@ -6,4 +6,17 @@ export const siteMetadata = {
   url: "https://sarthkh.vercel.app",
   locale: "en-US",
   type: "website" as const,
+  keywords: [
+    "Software Developer",
+    "Full-Stack Development",
+    "React",
+    "Next.js",
+    "Java",
+    "Python",
+    "Mobile Apps",
+    "AI/ML",
+    "Cloud Computing",
+    "Sarthak Khandelwal",
+  ],
+  twitterHandle: "@sarthkh",
 };

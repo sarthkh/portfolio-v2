@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
@@ -6,7 +6,8 @@ import Footer from "./components/footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ConvexClientProvider } from "./providers";
-import { siteMetadata } from "./site-metadata";
+import { siteMetadata } from "./utils/site-metadata";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
     template: `%s | ${siteMetadata.name}`,
   },
   description: siteMetadata.description,
+  keywords: siteMetadata.keywords,
+  authors: [{ url: siteMetadata.url }],
+  creator: siteMetadata.name,
   openGraph: {
     type: siteMetadata.type,
     locale: siteMetadata.locale,
@@ -38,6 +42,7 @@ export const metadata: Metadata = {
     title: siteMetadata.title,
     description: siteMetadata.description,
     images: [`${siteMetadata.url}/og-image.jpg`],
+    creator: siteMetadata.twitterHandle,
   },
   robots: {
     index: true,
@@ -50,6 +55,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    canonical: siteMetadata.url,
+  },
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
@@ -57,6 +65,13 @@ export const metadata: Metadata = {
     ],
     apple: { url: "/apple-touch-icon.png" },
   },
+  manifest: "/site.webmanifest",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -66,6 +81,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: siteMetadata.name,
+              url: siteMetadata.url,
+              jobTitle: "Software Developer",
+            }),
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <ConvexClientProvider>
           <div className="max-w-2xl mx-auto py-4 flex flex-col min-h-screen">

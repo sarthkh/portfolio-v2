@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import GuestbookForm from "../components/guestbook-form";
-import { siteMetadata } from "../site-metadata";
+import { siteMetadata } from "../utils/site-metadata";
 
 export const metadata: Metadata = {
   title: "Guestbook",
