@@ -7,11 +7,11 @@ const HomePostPreview = (props: PostMetadata) => {
     <Reveal>
       <Link
         key={props.slug}
-        className="flex justify-between w-full items-center my-6"
+        className="flex justify-between w-full items-center my-6 group"
         href={`/blog/posts/${props.slug}`}
       >
         <div className="">
-          <p className="font-light tracking-wider underline underline-offset-4 text-sm">
+          <p className="font-light tracking-wider underline underline-offset-4 text-sm group-hover:text-neutral-500 transition-colors duration-200">
             {props.title}
           </p>
         </div>

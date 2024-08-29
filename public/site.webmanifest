@@ -1,0 +1,29 @@
+{
+  "name": "Sarthak Khandelwal | Software Developer",
+  "short_name": "sarthkh",
+  "description": "Software developer crafting intuitive interfaces, advancing AI, and developing innovative digital solutions.",
+  "start_url": "/",
+  "id": "com.sarthkh.portfolio",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "categories": ["technology", "portfolio", "development"],
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

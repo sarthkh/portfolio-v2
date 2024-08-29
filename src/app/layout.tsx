@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: siteMetadata.description,
     images: [
       {
-        url: `${siteMetadata.url}/og-image.jpg`,
+        url: `${siteMetadata.url}/images/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: siteMetadata.title,
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteMetadata.title,
     description: siteMetadata.description,
-    images: [`${siteMetadata.url}/og-image.jpg`],
+    images: [`${siteMetadata.url}/images/og-image.jpg`],
     creator: siteMetadata.twitterHandle,
   },
   robots: {
@@ -60,10 +60,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icons/icon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico", sizes: "any" },
     ],
-    apple: { url: "/apple-touch-icon.png" },
+    apple: { url: "/icons/apple-touch-icon.png" },
   },
   manifest: "/site.webmanifest",
 };

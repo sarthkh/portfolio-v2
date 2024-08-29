@@ -8,6 +8,8 @@ import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 import type { Metadata } from "next";
 import PostPreview from "@/app/components/home-post-preview";
+import { stackoverflowDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { srcery } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 const getPostContent = (slug: string) => {
   const folder = "posts/";
@@ -37,7 +39,7 @@ interface CodeBlockProps {
 
 const CodeBlock = ({ language, value }: CodeBlockProps) => {
   return (
-    <SyntaxHighlighter language={language} style={a11yDark}>
+    <SyntaxHighlighter language={language} style={srcery}>
       {value}
     </SyntaxHighlighter>
   );
@@ -55,8 +57,8 @@ export async function generateMetadata({
   let { title, description, image } = post;
 
   let ogImage = image
-    ? `http://localhost:3000${image}`
-    : `http://localhost:3000/og?title=${title}`;
+    ? `https://sarthkh.vercel.app${image}`
+    : `https://sarthkh.vercel.app/og?title=${title}`;
 
   return {
     title,
@@ -65,7 +67,7 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
-      url: `https://knlrvr.dev/blog/${post.slug}`,
+      url: `https://sarthkh.vercel.app/blog/${post.slug}`,
       images: [
         {
           url: ogImage,
@@ -116,7 +118,7 @@ const PostPage = (props: PostPageProps) => {
             description: post.data.description,
             author: {
               "@type": "Person",
-              name: "Kane Lariviere",
+              name: "Sarthak Khandelwal",
             },
           }),
         }}
@@ -151,9 +153,9 @@ const PostPage = (props: PostPageProps) => {
         </div>
 
         <article
-          className="prose text-neutral-200 prose-strong:text-neutral-200 prose-headings:text-neutral-200
-                                    prose-[15px] prose-pre:bg-[#2b2b2b] prose-pre:my-2 prose-a:text-blue-500 max-w-full
-                                    prose-h6:text-xs prose-p:font-light
+          className="blog prose text-neutral-200 prose-strong:text-neutral-200 prose-headings:text-neutral-200 max-w-full
+                                    prose-sm prose-code:text-sm prose-pre:bg-[#1c1b19] prose-pre:my-2 prose-a:underline prose-a:underline-offset-4
+                                    prose-h6:text-xs prose-h6:text-neutral-500 prose-p:font-light
                                     prose-h5:text-xs prose-h5:border prose-h5:border-b-none prose-h5:border-neutral-500 prose-h5:p-4 prose-h5:rounded-lg prose-h5:bg-opacity-25 prose-h5:border-opacity-50
                                     prose-h4:text-lg prose-h4:tracking-wider prose-h4:font-normal
                                     prose-h3:text-xl prose-h3:font-medium prose-h3:tracking-wide

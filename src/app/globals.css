@@ -12,3 +12,13 @@ body {
   color: #e5e5e5;
   padding: 1rem;
 }
+
+.blog {
+  line-height: 1.75rem;
+}
+
+.prose {
+  a {
+    @apply text-neutral-200 hover:text-neutral-500 transition-colors duration-200;
+  }
+}

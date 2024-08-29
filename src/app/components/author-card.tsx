@@ -5,7 +5,7 @@ export default function AuthorCard() {
   return (
     <div className="flex items-center gap-2">
       <Image
-        src="/profile.jpg"
+        src="/images/profile.jpg"
         alt="profile picture"
         width={1000}
         height={1000}
@@ -14,7 +14,7 @@ export default function AuthorCard() {
       <div className="text-sm flex flex-col text-neutral-500">
         <p className="">Sarthak Khandelwal</p>
         <Link
-          href="https://twitter.com/sarthkh"
+          href="https://x.com/sarthkh"
           target="_blank"
           className="tracking-wide font-mono underline underline-offset-2 hover:text-neutral-200 transition-colors duration-200"
         >

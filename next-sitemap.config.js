@@ -2,7 +2,7 @@
 module.exports = {
     siteUrl: 'https://sarthkh.vercel.app',
     generateRobotsTxt: true,
-    exclude: ['/icon.svg', '/apple-touch-icon.png', '/site.webmanifest', '/404'],
+    exclude: ['/icons/icon.svg', '/icons/apple-touch-icon.png', '/site.webmanifest', '/404'],
     robotsTxtOptions: {
         policies: [
             {
