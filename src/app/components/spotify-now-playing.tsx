@@ -31,12 +31,11 @@ const SpotifyNowPlaying: React.FC = () => {
 
   const fetchNowPlaying = async () => {
     try {
-      const response = await fetch("/api/now-playing", { cache: "no-store" });
+      const response = await fetch("/api/now-playing");
       if (!response.ok) {
         throw new Error("Failed to fetch now playing data");
       }
-      const data: SpotifyData = await response.json();
-      return data;
+      return await response.json();
     } catch (error) {
       console.error("Error fetching now playing item:", error);
       return null;
@@ -44,20 +43,23 @@ const SpotifyNowPlaying: React.FC = () => {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     const updateNowPlaying = async () => {
       setLoading(true);
       const data = await fetchNowPlaying();
-      if (data) {
+      if (isMounted && data) {
         setResult(data);
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     updateNowPlaying();
 
-    const pollingInterval = setInterval(updateNowPlaying, 30000);
+    const pollingInterval = setInterval(updateNowPlaying, 60000); // 60 seconds
 
     return () => {
+      isMounted = false;
       clearInterval(pollingInterval);
     };
   }, []);
