@@ -1,25 +1,9 @@
-import { getNowPlaying } from "@/app/utils/spotify";
 import { NextResponse } from "next/server";
+import { getNowPlaying } from "../../utils/spotify";
 
-interface SpotifyData {
-  album: string;
-  albumImageUrl: string;
-  artist: string;
-  isPlaying: boolean;
-  songUrl: string;
-  title: string;
-}
-
-let cachedData: SpotifyData | null = null;
-let cacheTime: number = 0;
-const CACHE_DURATION = 30 * 1000; // 30 seconds
+export const revalidate = 60; // cache for 1 min
 
 export async function GET() {
-  const currentTime = Date.now();
-  if (cachedData && currentTime - cacheTime < CACHE_DURATION) {
-    return NextResponse.json(cachedData);
-  }
-
   try {
     const response = await getNowPlaying();
 
@@ -33,17 +17,17 @@ export async function GET() {
       return NextResponse.json({ isPlaying: false });
     }
 
-    cachedData = {
-      album: song.item.album.name,
-      albumImageUrl: song.item.album.images[0].url,
-      artist: song.item.artists.map((_artist: any) => _artist.name).join(", "),
-      isPlaying: song.is_playing,
-      songUrl: song.item.external_urls.spotify,
-      title: song.item.name,
-    };
-    cacheTime = currentTime;
+    const { is_playing, item } = song;
+    const { name: title, artists, album, external_urls } = item;
 
-    return NextResponse.json(cachedData);
+    return NextResponse.json({
+      isPlaying: is_playing,
+      title,
+      artist: artists.map((artist: { name: string }) => artist.name).join(", "),
+      album: album.name,
+      albumImageUrl: album.images[0]?.url,
+      songUrl: external_urls.spotify,
+    });
   } catch (error) {
     console.error("Error fetching now playing:", error);
     return NextResponse.json(

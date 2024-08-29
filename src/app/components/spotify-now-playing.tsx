@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { FaSpotify } from "react-icons/fa6";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import useSWR from "swr";
 
 interface SpotifyData {
   albumImageUrl: string;
@@ -19,121 +19,122 @@ const variants = {
   exit: { opacity: 0, y: -20 },
 };
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const SpotifyNowPlaying: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [result, setResult] = useState<SpotifyData>({
-    albumImageUrl: "",
-    artist: "No Artist",
-    isPlaying: false,
-    songUrl: "",
-    title: "No Title",
+  const { data, error } = useSWR<SpotifyData>("/api/now-playing", fetcher, {
+    refreshInterval: 60000, // poll every 60 sec
+    revalidateOnFocus: false,
+    onErrorRetry: (_error, _key, _config, revalidate, { retryCount }) => {
+      if (retryCount >= 3) return;
+      setTimeout(() => revalidate({ retryCount }), 5000 * (retryCount + 1));
+    },
   });
 
-  const fetchNowPlaying = async () => {
-    try {
-      const response = await fetch("/api/now-playing");
-      if (!response.ok) {
-        throw new Error("Failed to fetch now playing data");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching now playing item:", error);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const updateNowPlaying = async () => {
-      setLoading(true);
-      const data = await fetchNowPlaying();
-      if (isMounted && data) {
-        setResult(data);
-        setLoading(false);
-      }
-    };
-
-    updateNowPlaying();
-
-    const pollingInterval = setInterval(updateNowPlaying, 60000); // 60 seconds
-
-    return () => {
-      isMounted = false;
-      clearInterval(pollingInterval);
-    };
-  }, []);
+  const isLoading = !data && !error;
 
   return (
     <AnimatePresence mode="wait">
-      {loading ? (
-        <motion.div
-          key="loading"
-          variants={variants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="flex items-center gap-2 text-sm"
-        >
-          <div className="flex h-[45px] w-[45px] items-center justify-center rounded-md bg-[#1CB955] text-black">
-            <FaSpotify className="text-2xl" />
-          </div>
-          <p className="text-xs">
-            <span className="font-medium text-neutral-500">Hold up</span>
-            <br />
-            Checking Spotify...
-          </p>
-        </motion.div>
-      ) : result.isPlaying ? (
-        <motion.a
-          key={result.songUrl}
-          variants={variants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          href={result.songUrl}
-          rel="noopener noreferrer"
-          target="_blank"
-          className="flex items-center gap-2"
-        >
-          <Image
-            src={result.albumImageUrl || "/path/to/fallback-image.png"}
-            alt="Album Art"
-            width={45}
-            height={45}
-            className="rounded-md"
-          />
-          <div className="flex flex-col">
-            <span className="text-xs font-medium text-neutral-200">
-              {result.title}
-            </span>
-            <span className="text-xs text-neutral-500">{result.artist}</span>
-          </div>
-        </motion.a>
+      {isLoading ? (
+        <LoadingComponent />
+      ) : error ? (
+        <ErrorComponent />
+      ) : data?.isPlaying ? (
+        <NowPlayingComponent data={data} />
       ) : (
-        <motion.a
-          key="not-playing"
-          variants={variants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          href="https://open.spotify.com/user/0xeuqnft898ntgqarzodkaszw"
-          rel="noopener noreferrer"
-          target="_blank"
-          className="flex items-center gap-2 text-sm"
-        >
-          <div className="flex h-[45px] w-[45px] items-center justify-center rounded-md bg-[#1CB955] text-black">
-            <FaSpotify className="text-2xl" />
-          </div>
-          <p className="text-xs">
-            <span className="font-medium">Not playing</span>
-            <br />
-            Click to view my profile.
-          </p>
-        </motion.a>
+        <NotPlayingComponent />
       )}
     </AnimatePresence>
   );
 };
+
+const LoadingComponent = () => (
+  <motion.div
+    key="loading"
+    variants={variants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    className="flex items-center gap-2 text-sm"
+  >
+    <div className="flex h-[45px] w-[45px] items-center justify-center rounded-md bg-[#1CB955] text-black">
+      <FaSpotify className="text-2xl" />
+    </div>
+    <p className="text-xs">
+      <span className="font-medium text-neutral-500">Hold up</span>
+      <br />
+      Checking Spotify...
+    </p>
+  </motion.div>
+);
+
+const ErrorComponent = () => (
+  <motion.div
+    key="error"
+    variants={variants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    className="flex items-center gap-2 text-sm"
+  >
+    <div className="flex h-[45px] w-[45px] items-center justify-center rounded-md bg-red-500 text-white">
+      <FaSpotify className="text-2xl" />
+    </div>
+    <p className="text-xs">
+      <span className="font-medium text-neutral-500">Error</span>
+      <br />
+      Failed to fetch Spotify data
+    </p>
+  </motion.div>
+);
+
+const NowPlayingComponent: React.FC<{ data: SpotifyData }> = ({ data }) => (
+  <motion.a
+    key={data.songUrl}
+    variants={variants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    href={data.songUrl}
+    rel="noopener noreferrer"
+    target="_blank"
+    className="flex items-center gap-2"
+  >
+    <Image
+      src={data.albumImageUrl || "/path/to/fallback-image.png"}
+      alt="Album Art"
+      width={45}
+      height={45}
+      className="rounded-md"
+    />
+    <div className="flex flex-col">
+      <span className="text-xs font-medium text-neutral-200">{data.title}</span>
+      <span className="text-xs text-neutral-500">{data.artist}</span>
+    </div>
+  </motion.a>
+);
+
+const NotPlayingComponent = () => (
+  <motion.a
+    key="not-playing"
+    variants={variants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    href="https://open.spotify.com/user/0xeuqnft898ntgqarzodkaszw"
+    rel="noopener noreferrer"
+    target="_blank"
+    className="flex items-center gap-2 text-sm"
+  >
+    <div className="flex h-[45px] w-[45px] items-center justify-center rounded-md bg-[#1CB955] text-black">
+      <FaSpotify className="text-2xl" />
+    </div>
+    <p className="text-xs">
+      <span className="font-medium">Not playing</span>
+      <br />
+      Click to view my profile.
+    </p>
+  </motion.a>
+);
 
 export default SpotifyNowPlaying;

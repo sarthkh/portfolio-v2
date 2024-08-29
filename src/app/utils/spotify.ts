@@ -8,15 +8,10 @@ const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 
-interface TokenResponse {
-  access_token: string;
-  expires_in: number;
-}
-
 let accessToken: string | null = null;
 let tokenExpirationTime: number | null = null;
 
-const getAccessToken = async (): Promise<string> => {
+const getAccessToken = async () => {
   if (accessToken && tokenExpirationTime && Date.now() < tokenExpirationTime) {
     return accessToken;
   }
@@ -38,22 +33,34 @@ const getAccessToken = async (): Promise<string> => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data: TokenResponse = await response.json();
+    const data = await response.json();
     accessToken = data.access_token;
-    tokenExpirationTime = Date.now() + data.expires_in * 1000;
+    tokenExpirationTime = Date.now() + data.expires_in * 1000 - 60000; // refresh token 1 min before it actually expires
+
     return accessToken;
   } catch (error) {
-    console.error("Error fetching access token:", error);
+    console.error("Error refreshing access token:", error);
     throw error;
   }
 };
 
 export const getNowPlaying = async () => {
-  const token = await getAccessToken();
+  try {
+    const token = await getAccessToken();
+    const response = await fetch(NOW_PLAYING_ENDPOINT, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    });
 
-  return fetch(NOW_PLAYING_ENDPOINT, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching now playing:", error);
+    throw error;
+  }
 };
