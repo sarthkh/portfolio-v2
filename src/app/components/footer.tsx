@@ -23,6 +23,7 @@ export default function Footer() {
                 <Link
                   href="https://github.com/sarthkh"
                   target="_blank"
+                  aria-label="GitHub"
                   className="underline underline-offset-4 hover:text-neutral-200 transition-colors duration-200"
                 >
                   Sarthak Khandelwal
@@ -37,6 +38,7 @@ export default function Footer() {
                 <Link
                   href="https://nextjs.org"
                   target="_blank"
+                  aria-label="Next.js"
                   className="underline underline-offset-4 hover:text-neutral-200 transition-colors duration-200"
                 >
                   Next.js
@@ -45,14 +47,16 @@ export default function Footer() {
                 <Link
                   href="https://tailwindcss.com"
                   target="_blank"
+                  aria-label="Tailwind CSS"
                   className="underline underline-offset-4 hover:text-neutral-200 transition-colors duration-200"
                 >
-                  Tailwind
+                  Tailwind CSS
                 </Link>
                 , &&nbsp;
                 <Link
                   href="https://www.convex.dev"
                   target="_blank"
+                  aria-label="Convex"
                   className="underline underline-offset-4 hover:text-neutral-200 transition-colors duration-200"
                 >
                   Convex
@@ -67,6 +71,7 @@ export default function Footer() {
                 <Link
                   href="https://vercel.com"
                   target="_blank"
+                  aria-label="Vercel"
                   className="underline underline-offset-4 hover:text-neutral-200 transition-colors duration-200"
                 >
                   Vercel
@@ -79,6 +84,7 @@ export default function Footer() {
             <Link
               href="mailto:sarthakhandelwal@gmail.com"
               target="_blank"
+              aria-label="Email"
               className="border border-neutral-500 p-1 rounded-sm hover:text-neutral-200 hover:border-neutral-200 transition-colors duration-200"
             >
               <FaEnvelope />
@@ -86,6 +92,7 @@ export default function Footer() {
             <Link
               href="https://github.com/sarthkh"
               target="_blank"
+              aria-label="sarthkh on GitHub"
               className="border border-neutral-500 p-1 rounded-sm hover:text-neutral-200 hover:border-neutral-200 transition-colors duration-200"
             >
               <FiGithub />
@@ -93,6 +100,7 @@ export default function Footer() {
             <Link
               href="https://www.linkedin.com/in/sarthakhandelwal"
               target="_blank"
+              aria-label="LinkedIn"
               className="border border-neutral-500 p-1 rounded-sm hover:text-neutral-200 hover:border-neutral-200 transition-colors duration-200"
             >
               <FiLinkedin />
@@ -100,6 +108,7 @@ export default function Footer() {
             <Link
               href="https://x.com/sarthkh"
               target="_blank"
+              aria-label="X (formerly Twitter)"
               className="border border-neutral-500 p-1 rounded-sm hover:text-neutral-200 hover:border-neutral-200 transition-colors duration-200"
             >
               <FaXTwitter />

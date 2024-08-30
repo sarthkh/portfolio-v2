@@ -18,7 +18,7 @@ const GuestbookForm = () => {
       <div className="flex flex-col">
         {!user && (
           <Reveal>
-            <div className="mt-5 rounded-full text-sm py-2 mb-4 w-fit">
+            <div className="mt-4 rounded-full text-sm mb-[2.15rem] w-fit">
               <SignInButton mode="modal" fallbackRedirectUrl="/guestbook">
                 <div className="flex items-center gap-1 text-sm text-neutral-500 group cursor-pointer">
                   <span className="underline underline-offset-4 group-hover:text-neutral-200 transition-colors duration-200">
@@ -55,7 +55,7 @@ const GuestbookForm = () => {
                 required
                 placeholder="Leave a message here!"
               />
-              <button className="px-6 uppercase py-1.5 w-20 flex justify-center items-center font-light text-sm border rounded-md">
+              <button className="px-6 uppercase py-1.5 w-20 flex justify-center items-center font-light text-sm border rounded-md hover:text-neutral-500 transition-colors duration-200">
                 sign
               </button>
             </form>

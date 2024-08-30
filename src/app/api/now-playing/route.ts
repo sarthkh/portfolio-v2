@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getNowPlaying } from "../../utils/spotify";
+import { getNowPlaying } from "@/app/utils/spotify";
 
-export const revalidate = 60; // cache for 1 min
+export const revalidate = 0; // disable static rendering for this route
 
 export async function GET() {
   try {

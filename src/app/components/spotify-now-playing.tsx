@@ -1,9 +1,9 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import { FaSpotify } from "react-icons/fa6";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import useSWR from "swr";
 
 interface SpotifyData {
   albumImageUrl: string;
@@ -19,19 +19,33 @@ const variants = {
   exit: { opacity: 0, y: -20 },
 };
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const SpotifyNowPlaying: React.FC = () => {
-  const { data, error } = useSWR<SpotifyData>("/api/now-playing", fetcher, {
-    refreshInterval: 60000, // poll every 60 sec
-    revalidateOnFocus: false,
-    onErrorRetry: (_error, _key, _config, revalidate, { retryCount }) => {
-      if (retryCount >= 3) return;
-      setTimeout(() => revalidate({ retryCount }), 5000 * (retryCount + 1));
-    },
-  });
+  const [data, setData] = useState<SpotifyData | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const isLoading = !data && !error;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/now-playing");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const result = await response.json();
+        setData(result);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error("An error occurred"));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 60000); // poll every 60 sec
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <AnimatePresence mode="wait">

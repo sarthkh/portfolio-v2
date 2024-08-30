@@ -11,7 +11,7 @@ const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 let accessToken: string | null = null;
 let tokenExpirationTime: number | null = null;
 
-const getAccessToken = async () => {
+const getAccessToken = async (): Promise<string> => {
   if (accessToken && tokenExpirationTime && Date.now() < tokenExpirationTime) {
     return accessToken;
   }
@@ -35,9 +35,9 @@ const getAccessToken = async () => {
 
     const data = await response.json();
     accessToken = data.access_token;
-    tokenExpirationTime = Date.now() + data.expires_in * 1000 - 60000; // refresh token 1 min before it actually expires
+    tokenExpirationTime = Date.now() + data.expires_in * 1000 - 60000;
 
-    return accessToken;
+    return accessToken as string; // to assure accessToken is not null
   } catch (error) {
     console.error("Error refreshing access token:", error);
     throw error;
@@ -47,18 +47,12 @@ const getAccessToken = async () => {
 export const getNowPlaying = async () => {
   try {
     const token = await getAccessToken();
-    const response = await fetch(NOW_PLAYING_ENDPOINT, {
+    return fetch(NOW_PLAYING_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return response;
   } catch (error) {
     console.error("Error fetching now playing:", error);
     throw error;

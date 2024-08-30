@@ -2,12 +2,12 @@ import { Reveal } from "@/app/utils/reveal";
 import { notFound } from "next/navigation";
 import getPostMetadata from "@/app/utils/post-metadata";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
-import { a11yDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import fs from "fs";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 import type { Metadata } from "next";
 import PostPreview from "@/app/components/home-post-preview";
+import AuthorCard from "@/app/components/author-card";
 import { stackoverflowDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { srcery } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
@@ -130,9 +130,12 @@ const PostPage = (props: PostPageProps) => {
               <span className="my-2 font-migra text-4xl sm:text-5xl tracking-wider">
                 {post.data.title}
               </span>
-              <span className="w-fit font-light tracking-wider text-sm">
-                {post.data.date}
-              </span>
+              <div className="flex flex-col justify-between items-start md:items-center md:flex-row-reverse">
+                <span className="mb-8 md:mb-0 w-fit font-light tracking-wider text-sm">
+                  {post.data.date}
+                </span>
+                <AuthorCard />
+              </div>
             </div>
           </Reveal>
         </div>
@@ -161,7 +164,8 @@ const PostPage = (props: PostPageProps) => {
                                     prose-h3:text-xl prose-h3:font-medium prose-h3:tracking-wide
                                     prose-h2:font-light prose-h2:tracking-wider
                                     prose-quoteless prose-blockquote:border prose-blockquote:rounded-2xl prose-blockquote:not-italic prose-blockquote:border-neutral-500 prose-blockquote:bg-neutral-500 prose-blockquote:bg-opacity-10 prose-blockquote:text-xs prose-blockquote:text-neutral-500 prose-blockquote:px-4
-                                    prose-hr:border-neutral-500"
+                                    prose-hr:border-neutral-500
+                                    prose-img:rounded-lg"
         >
           <Reveal>
             <ReactMarkdown className="" components={components}>
