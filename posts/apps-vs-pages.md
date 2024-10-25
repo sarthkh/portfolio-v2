@@ -1,40 +1,40 @@
 ---
-title: App Router vs. Pages Router
-description: The differences between directories in Next.js
-tags: ['Next.js', 'webdev']
-date: December 12, 2023
+title: App Router vs. Pages Router in Next.js
+description: Exploring the differences between the App and Pages directories in Next.js
+tags: ['Next.js', 'webdev'] 
+date: May 8, 2024
 ---
 
-When I felt reasonably comfortable with my knowledge in React, I, of course, moved on to learning a framework. I didn't even know where to start. I did what any dev would do &mdash; **I googled it**. I chose the framework that seemed to have the most support, and was aligned with what I wanted from React &mdash; **Next.js**. 
+When I felt comfortable with my React knowledge, I naturally moved on to learning a framework. With so many options available, I didn't know where to start. So, I did what any developer would do &mdash; I googled it. I chose the framework that seemed to have the most support and aligned with what I wanted from React &mdash; Next.js.
 
-Next.js is an absolute powerhouse. It provides a ton of features out-of-the-box, and even though you might not need them all, it can be pretty intimidating if you don't understand them. 
+Next.js is a powerful framework that provides many features out-of-the-box. While you might not need all of them, understanding these features can be a bit overwhelming at first.
 
-I want to go over one of the simpler Next.js features &mdash; routing.
+In this blog post, I want to focus on one of the fundamental aspects of Next.js &mdash; routing.
 
-###### Disclaimer &mdash; This is not a comprehensive breakdown of Next.js or the features it provides. This is only an outline of my experience with a single feature in Next.js. If you've had a different experience, please feel free to let me know! 
+###### Disclaimer &mdash; This is not a comprehensive breakdown of Next.js or all its features. This post outlines my experience with a single feature in Next.js. If you've had a different experience, please feel free to share your thoughts!
 
-## Routing 
-Next.js refers to routing as 'the skeleton of every application', and uses a file-system based router to handle the behavior. 
+## Routing in Next.js
+Next.js considers routing as 'the backbone of every application' and uses a file-system based router to handle the behavior.
 
-There have been a lot of changes and additions with the introduction of Next.js 13 which, at the time of this blog post, is the most recent update from the framework. The most significant change is the new app directory, which handles routing for Next applications. Basically, the new app directory has a lot more flexibility and ease-of-use than the previous pages directory. 
+With the latest version of Next.js (version 14 at the time of writing), the framework has undergone significant changes and additions. The most notable change is the app directory, which handles routing for Next applications. The app directory offers more flexibility and ease-of-use compared to the previous pages directory.
 
-So what's the difference? What *exactly* is the benefit of the new app directory? Or should you just keep using the pages directory? Could you use *both*? 
+So, what's the difference between the two directories? What are the benefits of the app directory? Should you stick with the pages directory? Or can you use both?
 
-## Pages
-To outline some of the differences between the directories, we'll use this portfolio as an example. Using the **pages** directory, the structure looked a little like this &mdash;
+## The Pages Directory
+To illustrate some of the differences between the directories, let's use a portfolio as an example. Using the pages directory, the structure might look like this:
 
 ```
 └── pages     
     ├── index.tsx     
     ├── about.tsx     
     ├── contact.tsx     
-    ├── tsif.tsx     
-    └── guestbook.tsx   
+    ├── projects.tsx     
+    └── blog.tsx   
 ```
 
-Next.js will treat files in the **pages** directory as routes, provided that the files are React Components exported from a **.js**, **.ts**, **.jsx** or **.tsx** file.
+Next.js treats files in the pages directory as routes, provided that the files are React Components exported from a .js, .ts, .jsx, or .tsx file.
 
-For example, if the code below was in our '**about.tsx**' file, it will be accessible at '**/about**'.
+For example, if the code below is in the 'about.tsx' file, it will be accessible at '/about'.
 
 ```jsx
 export default function About() {
@@ -42,12 +42,12 @@ export default function About() {
 }
 ```
 
-Pages was *the* way to create routes in Next.js before the introduction of the App router. The Pages directory offers a simple and straight forward approach to handle routing in a Next.js application, but has a defining limitation &mdash;
+The Pages directory was the primary way to create routes in Next.js before the introduction of the App router. While it offers a simple and straightforward approach to handle routing, it has a defining limitation:
 
-**It's Simple**. The simplicity of the pages directory is both it's greatest and worst feature. It's ideal for smaller applications with simple, static pages but becomes difficult to use in larger applications with advanced routing & layouts, dynamic pages, etc. Essentially, the pages directory is simple and is best used for simple applications. You can certainly find workarounds to complete more complex tasks, but at that point, you may benefit from using the app directory. 
+**Simplicity**. The simplicity of the Pages directory is both its greatest strength and weakness. It's ideal for smaller applications with simple, static pages but becomes challenging to manage in larger applications with advanced routing, layouts, dynamic pages, etc. Essentially, the Pages directory is best suited for simple applications. You can find workarounds for more complex tasks, but you may benefit from using the App directory in those cases.
 
-## App
-Using the **app** directory, the structure of this portfolio looks more like this &mdash;
+## The App Directory 
+Using the App directory, the structure of a portfolio might look like this:
 
 ```
 src/     
@@ -55,52 +55,44 @@ src/
     ├── page.tsx     
     ├── globals.css     
     ├── layout.tsx    
-    ├── works
-    │   └── [url]        
+    ├── projects
+    │   └── [slug]        
     │       └── page.tsx 
     ├── about     
     │   └── page.tsx     
-    ├── blog
-    │   ├── posts
-    │   │   └── [slug]
-    │   │       └── page.tsx    
-    │   └── page.tsx     
-    ├── tsif     
-    │   └── page.tsx     
-    └── guestbook     
-        └── page.tsx    
+    └── blog
+        ├── [slug]
+        │   └── page.tsx    
+        └── page.tsx         
 ```
 
-###### The use of a folder in square brackets indicates a dynamic route. The name inside of the square brackets corresponds to the parameter we want to capture for the URL. 
+###### The use of a folder in square brackets indicates a dynamic route. The name inside the square brackets corresponds to the parameter we want to capture for the URL.
 
-The app router works in a new directory named **app**. In app, **folders** define the routes of your application, from a root folder down to a leaf folder. So, the previous route we defined in **pages** would instead be '**app/contact/page.tsx**'. 
+The App router works in a new directory named app. In the app directory, folders define the routes of your application, from a root folder down to a leaf folder. So, the previous route defined in pages would instead be 'app/about/page.tsx'.
 
-The app router includes new support for shared layouts, server components, streaming, and data fetching. It's a great answer to the issues introduced by the Pages directory, but does also come with its own limitation &mdash; 
+The App router includes new support for shared layouts, server components, streaming, and data fetching. It addresses the limitations of the Pages directory but also introduces its own learning curve:
 
-**It's Complex**. The biggest issue introduced by the app router is it's complexity. There's a bit of a learning curve in adopting new techniques and finding new ways to do things that were done another way in the pages directory. However, in my opinion, the benefit provided by the app router far outweighs the complexity and learning curve.
+**Learning Curve**. The main challenge with the App router is getting familiar with its new concepts and techniques. Adopting new approaches and finding new ways to do things that were done differently in the Pages directory can take some time. However, in my opinion, the benefits provided by the App router outweigh the learning curve.
 
-## So Which Directory Should You Use?
-Well, it depends! I would certainly recommend using the app router for any new projects you may create, and trying to adopt it for your existing work. However, the two routers offer two different behaviors for your applications, each with their pros and cons, so it's really a matter of what you feel is best for your use case!
+## Choosing the Right Directory
+So, which directory should you use? It depends on your specific use case. For new projects, I recommend using the App router and trying to adopt it for your existing work. However, the two routers offer different behaviors for your applications, each with their pros and cons, so it's really a matter of what you feel is best for your needs.
 
-From my experience, and what I've been able to gather from others, it might be best for now to stick with the pages directory for smaller projects, and use the app router for larger projects. 
-
-*Or you can use **both***. 
+Based on my experience and what I've gathered from others, it might be best to stick with the Pages directory for smaller projects and use the App router for larger, more complex projects.
 
 ## Using Both Directories
-The app router works alongside the pages directory to allow for incremental adoption of the new router, so while it's only advised to use both during migration, you can absolutely use both if you needed certain behaviors from each one. 
+The App router works alongside the Pages directory, allowing for incremental adoption of the new router. While it's generally advised to use both only during migration, you can use both if you need certain behaviors from each one.
 
-For example, I used the **pages** directory in my portfolio to showcase my projects. This was all handled in a file named '**[url].tsx**' that was located in the pages directory. Within that file, I use two functions that aren't supported in the app directory &mdash; *getStaticProps* & *getStaticPaths*. 
+For example, you might use the Pages directory to showcase projects, leveraging functions like getStaticProps and getStaticPaths that aren't supported in the App directory.
 
-###### Tip &mdash; When using both directories, you do have to be mindful of the different behaviors in layouts, state management, metadata, routing hooks, data fetching, etc. More about that below. 
+###### Tip &mdash; When using both directories, be mindful of the different behaviors in layouts, state management, metadata, routing hooks, data fetching, etc.
 
-### In Pages &mdash;
-
-*getStaticProps* tells Next.js to pre-render the page at build time using the props returned by *getStaticProps*. Here it is in action &mdash;
+### In Pages
+getStaticProps tells Next.js to pre-render the page at build time using the props returned by getStaticProps. Here's an example:
 
 ```jsx
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const url = params?.url as string;
-  const projectData: Project = await fetchProjectData(url);
+  const slug = params?.slug as string;
+  const projectData: Project = await fetchProjectData(slug);
 
   return {
     props: {
@@ -110,17 +102,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 ```
 
-*getStaticPaths* tells Next.js to statically pre-render all the paths specified by *getStaticPaths*. A page with dynamic routes that uses *getStaticProps* needs to define a list of paths to be statically generated. Here's that function in use as well &mdash; 
+getStaticPaths tells Next.js to statically pre-render all the paths specified by getStaticPaths. A page with dynamic routes that uses getStaticProps needs to define a list of paths to be statically generated. Here's an example:
 
 ```jsx
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = [
-    { params: { url: 'theviewfrominside' } },
-    { params: { url: 'keepup' } },
-    { params: { url: 'abstract' } },
-    { params: { url: 'theskyisfake'} },
-    { params: { url: 'personalportfolio' } },
-    { params: { url: 'ttrpcompanion' } },
+    { params: { slug: 'project-1' } },
+    { params: { slug: 'project-2' } },
+    // other paths
   ];
 
   return {
@@ -130,139 +119,114 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 ```
 
-### In App &mdash;
-In the app directory, *getStaticPaths* is replaced with *generateStaticParams*, simplifying route parameters, so the function might look something like this &mdash;
+### In App
+In the App directory, getStaticPaths is replaced with generateStaticParams, simplifying route parameters. Here's an example:
 
 ```jsx
 export async function generateStaticParams() {
-    return [
-        { url: 'theviewfrominside' },
-        { url: 'keepup' },
-        // other paths
-    ]
+  return [
+    { slug: 'project-1' },
+    { slug: 'project-2' },
+    // other paths
+  ];
 }
 ```
 
-I also didn't really need to use getStaticProps at all since I'm not fetching data from an API or backend of any kind. I just wrote a function with hardcoded data and called that function in the main component so it would only return the information for the project that matched the url (*the magic of params!*).
+Instead of using getStaticProps, you can write a function with hardcoded data and call it in the main component, so it only returns the information for the project that matches the slug (the magic of params!).
 
 ```jsx
-export default async function WorksPage(
-{
-    params, 
-}: {
-    params: { 
-        url: string
-    };
-}) {
+export default async function ProjectPage({ params }: { params: { slug: string } }) {
+  const project = fetchProjectData(params.slug);
 
-    const projects = fetchWorksData(params.url);
-
-    return (
-      // main component code
-      <p className="font-migra text-4xl sm:text-5xl md:text-7xl">{projects.title}</p>
-    )
+  return (
+    // main component code
+    <h1>{project.title}</h1>
+  );
 }
 
-const fetchWorksData = (url: string): Project => {
+const fetchProjectData = (slug: string): Project => {
   const projectDataMap: { [key: string]: Project } = {
-
-    projectOne: {
-      // data for projectOne like title, description, image, etc. 
+    'project-1': {
+      // data for project-1
     },
-    projectTwo: {
-      // data for projectTwo
-    }
+    'project-2': {
+      // data for project-2
+    },
     // more projects
-  }
-}
+  };
+
+  return projectDataMap[slug];
+};
 ```
 
-As of January 8th, 2024, everything in my portfolio was migrated to the new app router with the support of [these Next.js docs](https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration). It was a relatively easy process, but there are some important notes about behaviors that can make or break an experience that I went through during the migration. 
+## Metadata in Next.js
+Another difference between the Pages and App directories is how metadata is added.
 
-For example, if you changed the theme and then navigated to any of the **/work** pages, the theme would revert to it's default setting, which is dependent on the time of day. The theme wasn't persisting between my projects in the pages router, and the rest of the site in the app router. 
-
-Another example is how metadata is added. In the pages directory, we simply used the Head component provided by Next.js &mdash;
+In the Pages directory, you can use the Head component provided by Next.js:
 
 ```jsx
 <Head>
-  <meta property='og:title' content={`Kane Lariviere | ${projectData.title}`} key='title' />
-  <meta property='og:image' content='https://knlrvr.dev/og-bg-2.png' />
+  <meta property="og:title" content={`Portfolio | ${project.title}`} key="title" />
+  <meta property="og:image" content="https://example.com/og-image.png" />
 </Head>
 ```
 
-In the app directory, we have a few options. To define static metadata, we export a '**Metadata**'' object &mdash;
+In the App directory, you have a few options. To define static metadata, you can export a Metadata object:
 
 ```jsx
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Kane Lariviere | Portfolio',
-  description: 'Kane Lariviere • Software Engineer. Full Stack Developer. Designer.',
-}
+  title: 'My Portfolio | Software Developer',
+  description: 'Software developer crafting intuitive interfaces, advancing AI, and developing innovative digital solutions.',
+};
 ```
 
-Still pretty simple, right? If we had dynamic metadata, we could also use the *generateMetadata* function &mdash;
+For dynamic metadata, you can use the generateMetadata function:
 
 ```jsx
-export async function generateMetadata({ 
-    params
-}: any): Promise<Metadata | undefined> {
-    let post = getPostMetadata().find((post) => post.slug === params.slug);
-    
-    if (!post) {
-        return;
-    }
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const post = await getPostMetadata(params.slug);
 
-    let {
-        title,
-        description,
-        image,
-    } = post;
+  if (!post) {
+    return {};
+  }
 
-    let ogImage = image
-    ? `https://knlrvr.dev${image}`
-    : `https://knlrvr.dev/og?title=${title}`
+  const { title, description, image } = post;
 
-    return {
-        title, 
-        description,
-        openGraph: {
-            title, 
-            description,
-            type: 'article',
-            url: `https://knlrvr.dev/blog/${post.slug}`,
-            images: [
-                {
-                    url: ogImage,
-                }
-            ]
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title, 
-            description,
-            images: [ogImage]
-        },
-    };
+  const ogImage = image ? `https://example.com${image}` : `https://example.com/og?title=${title}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url: `https://example.com/blog/${post.slug}`,
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
 }
 ```
 
-The **generateMetadata** function returns a **Metadata** object with one or more metadata fields like '**title**' & '**description**', which is what is used to define the metadata for the dynamic page. 
+The generateMetadata function returns a Metadata object with one or more metadata fields like title and description, which is used to define the metadata for the dynamic page.
 
-I think these differences do a good job of showcasing the trade offs between directories, highlighting the fact that the pages directory is better for simpler applications, and the app directory is better for more complex applications. 
-
-I certainly wouldn't *recommend* using both routers, but it's certainly possible, and necessary if you're needing to incrementally adopt the app router. 
+These differences showcase the trade-offs between the Pages and App directories, highlighting that the Pages directory is better for simpler applications, while the App directory is better for more complex applications.
 
 ## More about Next.js
-**Always read the docs!**   
-For more information about Next.js version 13, visit [nextjs.org](https://nextjs.org/blog/next-13).    
+**Always read the docs!**  
+For more information about the latest version of Next.js, visit [nextjs.org](https://nextjs.org/).  
 For more information about migrating from Pages to App, visit [the Incremental Adoption Guide from Next.js](https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration).  
-For more information about what the app router offers over the pages router, please visit [nextjs.org](https://nextjs.org/).
+For more information about what the App router offers over the Pages router, please visit [nextjs.org](https://nextjs.org/).
 
-## This Portfolio
-As always, all of my work is open source. Visit [the repo for this portfolio](https://github.com/knlrvr/kanelariviere-new) and take a look around! If you stumble upon any commits from before 01/08/24, you'll be able to see both routers in action! 
+## Conclusion
+Choosing the right tools can make all the difference when creating efficient and scalable applications, and nearly every approach comes with its own set of considerations. It's important to address these considerations and figure out what will work best for you.
 
-## Conclusion 
-Choosing the right tools can make all the difference when creating efficient and scalable applications, and nearly every approach comes with its own set of considerations. It's important to address these considerations and figure out what will work best for you. 
-
-Let me know what you think! & **happy coding**!
+Let me know what you think, and happy coding!
